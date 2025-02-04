@@ -40,9 +40,40 @@ Future<void> loginRequest(username, password) async {
         print("Error decoding JSON");
       }
     } else {
-      return Future.error('Credenziali errate');
+      return Future.error('Wrong credentials');
     }
   } catch (e) {
-    return Future.error('Impossibile connettersi al server');
+    return Future.error('Server not available');
+  }
+}
+
+Future<void> registerRequest(username, password) async {
+  try {
+    final response = await http.post(
+      Uri.parse('${Config.backendBaseUrl}/register'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'username': username,
+        'password': password,
+      }),
+    );
+    if (response.statusCode == 200) {
+      //return LoggedUser.fromJson(jsonDecode(response.body), username);
+      try {
+        final content = jsonDecode(response.body);
+        token = content['token'];
+        debugPrint(token);
+      } catch (e) {
+        print("Error decoding JSON");
+      }
+    } else if (response.statusCode == 400) {
+      return Future.error('User already exists');
+    } else {
+      return Future.error('Server not available');
+    }
+  } catch (e) {
+    return Future.error('Server not available');
   }
 }

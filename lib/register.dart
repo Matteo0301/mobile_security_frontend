@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_security/home.dart';
-import 'package:mobile_security/register.dart';
 import 'package:mobile_security/requests.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key, required this.title});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key, required this.title});
   final String title;
 
   @override
-  LoginState createState() => LoginState();
+  RegisterState createState() => RegisterState();
 }
 
-class LoginState extends State<Login> {
+class RegisterState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController userController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController passwordCheckController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,6 @@ class LoginState extends State<Login> {
                       border: OutlineInputBorder(),
                       labelText: 'Username',
                     ),
-                    keyboardType: TextInputType.name,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Insert username';
@@ -62,10 +61,32 @@ class LoginState extends State<Login> {
                       border: OutlineInputBorder(),
                       labelText: 'Password',
                     ),
-                    keyboardType: TextInputType.visiblePassword,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Insert password';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 16,
+                  ),
+                  child: TextFormField(
+                    autofillHints: const [AutofillHints.password],
+                    controller: passwordCheckController,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Retype password',
+                    ),
+                    validator: (value) {
+                      if (value == null ||
+                          value.isEmpty ||
+                          value != passwordController.text) {
+                        return 'Passwords don\'t match';
                       }
                       return null;
                     },
@@ -84,7 +105,7 @@ class LoginState extends State<Login> {
                           String username = userController.text;
                           String password = passwordController.text;
 
-                          loginRequest(username, password)
+                          registerRequest(username, password)
                               .then((user) async {
                                 Navigator.push(
                                   context,
@@ -108,29 +129,6 @@ class LoginState extends State<Login> {
                       child: const Padding(
                         padding: EdgeInsets.all(10.0),
                         child: Text('Login', style: TextStyle(fontSize: 20)),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 16.0,
-                  ),
-                  child: Center(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder:
-                                (context) => RegisterPage(title: widget.title),
-                          ),
-                        );
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Text('Register', style: TextStyle(fontSize: 20)),
                       ),
                     ),
                   ),
