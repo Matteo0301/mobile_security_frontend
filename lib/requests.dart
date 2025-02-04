@@ -77,3 +77,24 @@ Future<void> registerRequest(username, password) async {
     return Future.error('Server not available');
   }
 }
+
+Future<void> addTask(title, description) async {
+  try {
+    final response = await http.post(
+      Uri.parse('${Config.backendBaseUrl}/tasks'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'authorization': 'Bearer $token',
+      },
+      body: jsonEncode(<String, String>{
+        'title': title,
+        'description': description,
+      }),
+    );
+    if (response.statusCode < 200 || response.statusCode >= 300) {
+      return Future.error('Server not available');
+    }
+  } catch (e) {
+    return Future.error('Server not available');
+  }
+}

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_security/home.dart';
 import 'package:mobile_security/register.dart';
 import 'package:mobile_security/requests.dart';
+import 'package:mobile_security/tasks/main_page.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key, required this.title});
@@ -89,8 +90,7 @@ class LoginState extends State<Login> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder:
-                                        (context) => MyHomePage(title: "Test"),
+                                    builder: (context) => HomePage(),
                                   ),
                                 );
                               })
