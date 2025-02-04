@@ -21,29 +21,24 @@ bool _certificateCheck(cert, host, port) {
   return true;
 }
 
-class LoggedUser {
-  final String username;
-  final bool admin;
-
-  const LoggedUser({required this.username, required this.admin});
-
-  factory LoggedUser.fromJson(Map<String, dynamic> json, String username) {
-    token = json['token'];
-    return LoggedUser(username: username, admin: json['admin']);
-  }
-}
-
 void logout() {
   token = '';
 }
 
-Future<LoggedUser> loginRequest(username, password) async {
+Future<void> loginRequest(username, password) async {
   try {
     final response = await http.get(
-      Uri.https(Config.backendBaseUrl, '/users/auth/$username/$password'),
+      Uri.parse('${Config.backendBaseUrl}/auth/$username/$password'),
     );
     if (response.statusCode == 200) {
-      return LoggedUser.fromJson(jsonDecode(response.body), username);
+      //return LoggedUser.fromJson(jsonDecode(response.body), username);
+      try {
+        final content = jsonDecode(response.body);
+        token = content['token'];
+        debugPrint(token);
+      } catch (e) {
+        print("Error decoding JSON");
+      }
     } else {
       return Future.error('Credenziali errate');
     }

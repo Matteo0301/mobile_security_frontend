@@ -1,6 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:mobile_security/home.dart';
 import 'package:mobile_security/requests.dart';
 
 class Login extends StatefulWidget {
@@ -43,7 +42,7 @@ class LoginState extends State<Login> {
                     keyboardType: TextInputType.name,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Inserisci il nome utente';
+                        return 'Insert username';
                       }
                       return null;
                     },
@@ -65,7 +64,7 @@ class LoginState extends State<Login> {
                     keyboardType: TextInputType.visiblePassword,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Inserisci la password';
+                        return 'Insert password';
                       }
                       return null;
                     },
@@ -85,7 +84,15 @@ class LoginState extends State<Login> {
                           String password = passwordController.text;
 
                           loginRequest(username, password)
-                              .then((user) async {})
+                              .then((user) async {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (context) => MyHomePage(title: "Test"),
+                                  ),
+                                );
+                              })
                               .onError((error, stackTrace) async {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text(error.toString())),
@@ -93,11 +100,7 @@ class LoginState extends State<Login> {
                               });
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                'Non hai inserito i dati correttamente',
-                              ),
-                            ),
+                            const SnackBar(content: Text('Wrong login data')),
                           );
                         }
                       },

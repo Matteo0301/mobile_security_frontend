@@ -1,3 +1,3 @@
 class Config {
-  static final backendBaseUrl = "https://10.0.2.2:3000";
+  static final backendBaseUrl = "http://localhost:3000";
 }
