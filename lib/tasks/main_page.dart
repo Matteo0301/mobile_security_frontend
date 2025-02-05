@@ -39,58 +39,33 @@ class HomePageState extends State<HomePage> {
           title: Text('These are your tasks'),
           centerTitle: true,
           automaticallyImplyLeading: false,
-          /*           actions: [
-            Consumer<Model<Task>>(
-              builder: (context, collections, child) {
-                if (collections.selected.isEmpty) {
-                  return const SizedBox.shrink();
-                } else {
-                  return IconButton(
-                    onPressed: () async {
-                      bool? confirm = await showDialog(
-                        context: context,
-                        builder: (_) {
-                          return ConfirmDialog(context: context);
-                        },
-                      );
-                      if (confirm == null || !confirm) {
-                        return;
-                      }
-                      List<Task> coll = [];
-                      for (var index in collections.selected) {
-                        coll.add(collections.items[index]);
-                      }
-                      removeCollections(coll)
-                          .then(
-                            (value) => {
-                              collections.clearSelected(),
-                              collections.notifyListeners(),
-                            },
-                          )
-                          .catchError((error) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(error.toString())),
-                            );
-
-                            collections.notifyListeners();
-                            return <dynamic>{};
-                          });
-                    },
-                    icon: const Icon(Icons.delete),
-                  );
-                }
-              },
-            ),
+          actions: [
             Consumer<Model<Task>>(
               builder: (context, collections, child) {
                 return UpdateButton(model: collections);
               },
             ),
-          ], */
+          ],
         ),
         body: content,
         floatingActionButton: AddButton(),
       ),
+    );
+  }
+}
+
+class UpdateButton<T> extends StatelessWidget {
+  final Model<T> model;
+
+  const UpdateButton({super.key, required this.model});
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        model.notifyListeners();
+      },
+      icon: const Icon(Icons.update),
     );
   }
 }

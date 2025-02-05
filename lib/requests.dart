@@ -98,3 +98,20 @@ Future<void> addTask(title, description) async {
     return Future.error('Server not available');
   }
 }
+
+Future<void> deleteTask(id) async {
+  try {
+    final response = await http.delete(
+      Uri.parse('${Config.backendBaseUrl}/task/$id'),
+      headers: <String, String>{'authorization': 'Bearer $token'},
+    );
+    if (response.statusCode == 404) {
+      return Future.error('Task does not exist');
+    }
+    if (response.statusCode < 200 || response.statusCode >= 300) {
+      return Future.error('Server not available');
+    }
+  } catch (e) {
+    return Future.error('Server not available');
+  }
+}
