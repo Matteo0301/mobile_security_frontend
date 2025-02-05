@@ -1,3 +1,3 @@
 class Config {
-  static final backendBaseUrl = "http://localhost:3000";
+  static final backendBaseUrl = "https://mobile-security.onrender.com";
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_security/home.dart';
 import 'package:mobile_security/requests.dart';
+import 'package:mobile_security/tasks/main_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key, required this.title});
@@ -110,8 +110,7 @@ class RegisterState extends State<RegisterPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder:
-                                        (context) => MyHomePage(title: "Test"),
+                                    builder: (context) => HomePage(),
                                   ),
                                 );
                               })

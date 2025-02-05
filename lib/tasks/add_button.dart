@@ -68,10 +68,9 @@ class AddButtonState extends State<AddButton> {
                             vertical: 16,
                           ),
                           child: TextFormField(
-                            /* maxLines: null,
-                            expands: true, */
+                            maxLines: null,
+                            keyboardType: TextInputType.multiline,
                             controller: descriptionController,
-                            obscureText: true,
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Description',
