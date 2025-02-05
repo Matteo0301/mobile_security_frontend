@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_security/desrcription_page.dart';
+import 'package:mobile_security/description_page.dart';
 import 'package:mobile_security/model.dart';
 import 'package:mobile_security/requests.dart';
 import 'package:mobile_security/tasks.dart';
@@ -91,53 +91,6 @@ class TaskList extends StatelessWidget {
                       },
                       icon: const Icon(Icons.delete),
                     ),
-                    /* Row(
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder:
-                                    (context) => Description(
-                                      title:
-                                          tasks
-                                              .items[tasks.items.length -
-                                                  index -
-                                                  1]
-                                              .title,
-                                      description:
-                                          tasks
-                                              .items[tasks.items.length -
-                                                  index -
-                                                  1]
-                                              .description,
-                                    ),
-                              ),
-                            );
-                          },
-                          icon: const Icon(Icons.arrow_forward_ios),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            deleteTask(
-                                  tasks
-                                      .items[tasks.items.length - index - 1]
-                                      .id,
-                                )
-                                .then((_) => tasks.notifyListeners())
-                                .onError(
-                                  (error, stackTrace) => ScaffoldMessenger.of(
-                                    context,
-                                  ).showSnackBar(
-                                    SnackBar(content: Text(error.toString())),
-                                  ),
-                                );
-                          },
-                          icon: const Icon(Icons.delete),
-                        ),
-                      ],
-                    ), */
                   );
                 },
               );

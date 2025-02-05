@@ -1,25 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobile_security/config.dart';
 
 String token = '';
-
-class DevHttpOverrides extends HttpOverrides {
-  @override
-  HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback = _certificateCheck;
-  }
-}
-
-// We need to tell dart to accept our certificate since it's self signed
-bool _certificateCheck(cert, host, port) {
-  return true;
-}
 
 void logout() {
   token = '';
@@ -37,7 +22,8 @@ Future<void> loginRequest(String username, String password) async {
         token = content['token'];
         debugPrint(token);
       } catch (e) {
-        print("Error decoding JSON");
+        debugPrint("Error decoding JSON");
+        return Future.error('Error decoding JSON');
       }
     } else {
       return Future.error('Wrong credentials');
@@ -66,7 +52,8 @@ Future<void> registerRequest(String username, String password) async {
         token = content['token'];
         debugPrint(token);
       } catch (e) {
-        print("Error decoding JSON");
+        debugPrint("Error decoding JSON");
+        return Future.error('Error decoding JSON');
       }
     } else if (response.statusCode == 400) {
       return Future.error('User already exists');

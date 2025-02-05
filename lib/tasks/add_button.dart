@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart' hide TextField;
 import 'package:mobile_security/model.dart';
 import 'package:mobile_security/requests.dart';
@@ -13,11 +12,6 @@ class AddButton extends StatefulWidget {
 }
 
 class AddButtonState extends State<AddButton> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   final formKey = GlobalKey<FormState>();
 
   Future<void> inputPopup(

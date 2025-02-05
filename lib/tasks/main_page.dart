@@ -6,29 +6,8 @@ import 'package:mobile_security/tasks/add_button.dart';
 import 'package:mobile_security/tasks/task_list.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
-  @override
-  State<StatefulWidget> createState() => HomePageState();
-}
-
-class HomePageState extends State<HomePage> {
-  late DateTime date;
-
-  @override
-  void initState() {
-    super.initState();
-    date = DateTime.now().copyWith(
-      month: DateTime.now().month + 1,
-      day: 0,
-      hour: 12,
-    );
-    final next = date.copyWith(day: date.day + 1);
-    if (next.day == 1 && date.hour >= 12) {
-      date = next;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

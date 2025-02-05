@@ -37,9 +37,9 @@ Future<List<Task>> getTasks() async {
     if (response.statusCode == 200) {
       //return LoggedUser.fromJson(jsonDecode(response.body), username);
       try {
-        print(response.body);
+        debugPrint(response.body);
         final content = jsonDecode(response.body);
-        print(content);
+        debugPrint(content);
         List<Task> tasks = [];
         for (var t in content['tasks']) {
           tasks.add(Task.fromJson(t));
@@ -47,7 +47,7 @@ Future<List<Task>> getTasks() async {
         debugPrint(tasks.toString());
         return tasks;
       } catch (e) {
-        print("Error decoding JSON");
+        debugPrint("Error decoding JSON");
         return Future.error('Received invalid response');
       }
     } else if (response.statusCode == 400) {
