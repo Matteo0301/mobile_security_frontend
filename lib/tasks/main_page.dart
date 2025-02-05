@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_security/model.dart';
+import 'package:mobile_security/requests.dart';
 import 'package:mobile_security/tasks.dart';
 import 'package:mobile_security/tasks/add_button.dart';
 import 'package:mobile_security/tasks/task_list.dart';
@@ -44,6 +45,13 @@ class HomePageState extends State<HomePage> {
               builder: (context, collections, child) {
                 return UpdateButton(model: collections);
               },
+            ),
+            IconButton(
+              onPressed: () {
+                logout();
+                Navigator.of(context).popUntil((route) => route.isFirst);
+              },
+              icon: const Icon(Icons.logout_rounded),
             ),
           ],
         ),

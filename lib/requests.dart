@@ -25,7 +25,7 @@ void logout() {
   token = '';
 }
 
-Future<void> loginRequest(username, password) async {
+Future<void> loginRequest(String username, String password) async {
   try {
     final response = await http.get(
       Uri.parse('${Config.backendBaseUrl}/auth/$username/$password'),
@@ -47,7 +47,7 @@ Future<void> loginRequest(username, password) async {
   }
 }
 
-Future<void> registerRequest(username, password) async {
+Future<void> registerRequest(String username, String password) async {
   try {
     final response = await http.post(
       Uri.parse('${Config.backendBaseUrl}/register'),
@@ -78,7 +78,7 @@ Future<void> registerRequest(username, password) async {
   }
 }
 
-Future<void> addTask(title, description) async {
+Future<void> addTask(String title, String description) async {
   try {
     final response = await http.post(
       Uri.parse('${Config.backendBaseUrl}/tasks'),
@@ -99,7 +99,7 @@ Future<void> addTask(title, description) async {
   }
 }
 
-Future<void> deleteTask(id) async {
+Future<void> deleteTask(String id) async {
   try {
     final response = await http.delete(
       Uri.parse('${Config.backendBaseUrl}/task/$id'),
@@ -108,7 +108,28 @@ Future<void> deleteTask(id) async {
     if (response.statusCode == 404) {
       return Future.error('Task does not exist');
     }
-    if (response.statusCode < 200 || response.statusCode >= 300) {
+    if (response.statusCode < 200 || response.statusCode >= 500) {
+      return Future.error('Server not available');
+    }
+  } catch (e) {
+    return Future.error('Server not available');
+  }
+}
+
+Future<void> updateTask(String id, bool completed) async {
+  try {
+    final response = await http.patch(
+      Uri.parse('${Config.backendBaseUrl}/task/$id'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'authorization': 'Bearer $token',
+      },
+      body: jsonEncode({'completed': completed}),
+    );
+    if (response.statusCode == 404) {
+      return Future.error('Task does not exist');
+    }
+    if (response.statusCode < 200 || response.statusCode >= 500) {
       return Future.error('Server not available');
     }
   } catch (e) {

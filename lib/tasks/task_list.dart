@@ -33,10 +33,30 @@ class TaskList extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return ListTile(
                     title: Text(
-                      style: const TextStyle(fontSize: 20),
+                      style: TextStyle(
+                        fontSize: 20,
+                        decoration:
+                            (tasks
+                                    .items[tasks.items.length - index - 1]
+                                    .completed)
+                                ? TextDecoration.lineThrough
+                                : null,
+                      ),
                       tasks.items[tasks.items.length - index - 1].title,
                     ),
-                    selectedTileColor: Colors.blue[100],
+                    leading: Checkbox(
+                      value:
+                          tasks.items[tasks.items.length - index - 1].completed,
+                      onChanged: (value) async {
+                        if (value != null) {
+                          await updateTask(
+                            tasks.items[tasks.items.length - index - 1].id,
+                            value,
+                          );
+                          tasks.notifyListeners();
+                        }
+                      },
+                    ),
                     trailing: IconButton(
                       onPressed: () {
                         deleteTask(
