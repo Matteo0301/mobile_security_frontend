@@ -3,8 +3,13 @@ import 'package:mobile_security/requests.dart';
 import 'package:mobile_security/tasks/main_page.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key, required this.title});
+  const RegisterPage({
+    super.key,
+    required this.title,
+    required this.onThemeChanged,
+  });
   final String title;
+  final VoidCallback onThemeChanged;
 
   @override
   RegisterState createState() => RegisterState();
@@ -110,7 +115,10 @@ class RegisterState extends State<RegisterPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => HomePage(),
+                                    builder:
+                                        (context) => HomePage(
+                                          onThemeChanged: widget.onThemeChanged,
+                                        ),
                                   ),
                                 );
                               })

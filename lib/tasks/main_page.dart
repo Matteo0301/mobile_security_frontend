@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_security/model.dart';
 import 'package:mobile_security/requests.dart';
+import 'package:mobile_security/settings_page.dart';
 import 'package:mobile_security/tasks.dart';
 import 'package:mobile_security/tasks/add_button.dart';
 import 'package:mobile_security/tasks/task_list.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, required this.onThemeChanged});
+  final VoidCallback onThemeChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,18 @@ class HomePage extends StatelessWidget {
                 Navigator.of(context).popUntil((route) => route.isFirst);
               },
               icon: const Icon(Icons.logout_rounded),
+            ),
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder:
+                        (context) => Settings(onThemeChanged: onThemeChanged),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.settings),
             ),
           ],
         ),

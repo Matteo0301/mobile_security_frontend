@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_security/register.dart';
 import 'package:mobile_security/requests.dart';
+import 'package:mobile_security/sqlite.dart';
 import 'package:mobile_security/tasks/main_page.dart';
 
 class Login extends StatefulWidget {
-  const Login({super.key, required this.title});
+  const Login({super.key, required this.title, required this.onThemeChanged});
   final String title;
+  final VoidCallback onThemeChanged;
 
   @override
   LoginState createState() => LoginState();
@@ -86,10 +88,14 @@ class LoginState extends State<Login> {
 
                           loginRequest(username, password)
                               .then((user) async {
+                                openDB(username, password);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => HomePage(),
+                                    builder:
+                                        (context) => HomePage(
+                                          onThemeChanged: widget.onThemeChanged,
+                                        ),
                                   ),
                                 );
                               })
@@ -123,7 +129,10 @@ class LoginState extends State<Login> {
                           context,
                           MaterialPageRoute(
                             builder:
-                                (context) => RegisterPage(title: widget.title),
+                                (context) => RegisterPage(
+                                  title: widget.title,
+                                  onThemeChanged: widget.onThemeChanged,
+                                ),
                           ),
                         );
                       },

@@ -1,13 +1,17 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobile_security/config.dart';
+import 'package:mobile_security/sqlite.dart';
 
 String token = '';
 
 void logout() {
   token = '';
+  closeDB();
 }
 
 Future<void> loginRequest(String username, String password) async {
@@ -22,8 +26,7 @@ Future<void> loginRequest(String username, String password) async {
         token = content['token'];
         debugPrint(token);
       } catch (e) {
-        debugPrint("Error decoding JSON");
-        return Future.error('Error decoding JSON');
+        print("Error decoding JSON");
       }
     } else {
       return Future.error('Wrong credentials');
@@ -52,8 +55,7 @@ Future<void> registerRequest(String username, String password) async {
         token = content['token'];
         debugPrint(token);
       } catch (e) {
-        debugPrint("Error decoding JSON");
-        return Future.error('Error decoding JSON');
+        print("Error decoding JSON");
       }
     } else if (response.statusCode == 400) {
       return Future.error('User already exists');

@@ -39,7 +39,6 @@ Future<List<Task>> getTasks() async {
       try {
         debugPrint(response.body);
         final content = jsonDecode(response.body);
-        debugPrint(content);
         List<Task> tasks = [];
         for (var t in content['tasks']) {
           tasks.add(Task.fromJson(t));
